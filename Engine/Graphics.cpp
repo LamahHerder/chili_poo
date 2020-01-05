@@ -243,14 +243,18 @@ Graphics::Graphics( HWNDKey& key )
 void Graphics::DrawCircle(int x, int y, int radius, Color c)
 {
 	const int rad_sq = radius * radius;
-	for (int y_loop = y - radius; y_loop < y + radius; ++y_loop)
+	for (int y_loop = y - radius; y_loop < y + radius + 1; y_loop++)
 	{
-		for (int x_loop = x - radius; x_loop < x + radius; ++x_loop)
+		for (int x_loop = x - radius; x_loop < x + radius + 1; x_loop++)
 		{
 			const int x_diff = x - x_loop;
 			const int y_diff = y - y_loop;
 			if (x_diff * x_diff + y_diff * y_diff <= rad_sq)
 			{
+				if (x_diff * x_diff + y_diff * y_diff <= radius * (radius/2))
+				{
+					continue;
+				}
 				PutPixel(x_loop, y_loop, c);
 			}
 		}
